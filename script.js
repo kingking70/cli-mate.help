@@ -6,9 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const content = document.querySelector('.content');
     if (content) {
         const welcomeMsg = document.createElement('p');
-        welcomeMsg.textContent = 'Welcome to cli-mate.help - your tech assistant!';
-        welcomeMsg.style.marginTop = '20px';
-        welcomeMsg.style.fontStyle = 'italic';
+        welcomeMsg.textContent = 'need credible!! the fastest way to gain credibility is to find someone credible and translate their formal information to the relevant peeps!';
+        welcomeMsg.style.marginTop = '3em';
         content.appendChild(welcomeMsg);
     }
 });
