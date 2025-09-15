@@ -1,8 +1,6 @@
 import { Leva } from 'leva';
 
-
 import BottomSlider from './BottomSlider/BottomSlider';
-
 
 
 export default function App() {
