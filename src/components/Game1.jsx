@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../Game1.css';
 import { Atom } from 'lucide-react';
 
@@ -7,22 +7,48 @@ const Game1 = () => {
     
     // icon
     const [isMinimized, setIsMinimized] = useState(true);
-    const [position, setPosition] = useState({ x: 50, y: 50 });
+    const [position, setPosition] = useState({ x: 0, y: 200 });
     const [isDragging, setIsDragging] = useState(false);
+    const [isDragged, setIsDragged] = useState(false);
+    const dragRef = useRef(null);
+    const offsetRef = useRef({ x: 0, y: 0 });
+
+    useEffect(() => {
+        const updatePosition = () => {
+            const iconWidth = 60;
+            const padding = 20;
+            setPosition(prev => ({
+                x: window.innerWidth - iconWidth - padding,
+                y: prev.y || 50
+            }));
+        };
+        
+        // Set initial position
+        updatePosition();
+        
+        // Update on window resize (optional)
+        window.addEventListener('resize', updatePosition);
+        return () => window.removeEventListener('resize', updatePosition);
+    }, []);
 
     const handleMouseDown = (e) => {
         setIsDragging(true);
-        dragRef.current = {
-            startX: e.clientX - position.x,
-            startY: e.clientY - position.y
+        setIsDragged(false);
+
+        // dragStartPos.current = { x: e.clientX, y: e.clientY };
+
+        const rect = dragRef.current.getBoundingClientRect();
+        offsetRef.current = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
         };
     };
     
     const handleMouseMove = (e) => {
         if (isDragging) {
             setPosition({
-                x: e.clientX - dragRef.current.startX,
-                y: e.clientY - dragRef.current.startY
+                x: e.clientX - offsetRef.current.x,
+                y: e.clientY - offsetRef.current.y
             });
         }
     };
@@ -30,6 +56,18 @@ const Game1 = () => {
     const handleMouseUp = () => {
         setIsDragging(false);
     };
+
+    useEffect(() => {
+        if (isDragging) {
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
+          }
+          
+          return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+          };
+    }, [isDragging])
 
     // game
     const [stage, setStage] = useState('welcome');
@@ -39,7 +77,13 @@ const Game1 = () => {
     const [isChecking, setIsChecking] = useState(false);
     const [showWelcomeText, setShowWelcomeText] = useState(false);
 
+    const handleIconClick = () => {
+        if (!isDragged) {  // Only maximize if we didn't drag
+            handleMaximize();
+        }
 
+        setTimeout(() => setIsDragged(false), 0);
+    };
 
     const resetGame = () => {
         setStage('welcome');
@@ -221,7 +265,11 @@ const Game1 = () => {
     return (
         <>
             {isMinimized ? (
-                <div className="floating-icon" onClick={handleMaximize}  onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
+                <div ref={dragRef} className="floating-icon" onClick={handleIconClick}  onMouseDown={handleMouseDown} style={{
+                    left: `${position.x}px`,
+                    top: `${position.y}px`,
+                    position: 'fixed'  // or 'absolute'
+                }}>
                     <Atom />
                 </div>
             ) : (
