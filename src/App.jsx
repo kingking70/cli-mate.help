@@ -12,7 +12,7 @@ function RotatingSphere() {
     if (sphereRef.current) sphereRef.current.rotation.y += delta * 0.5
   })
   return (
-    <mesh ref={sphereRef} rotation={[0.3, 0.6, 0]} position={[-1, 0.5, 0]}>
+    <mesh ref={sphereRef} scale={0.5} rotation={[0.3, 0.6, 0]} position={[-1, 0.5, 0]}>
       <sphereGeometry />
       <meshStandardMaterial wireframe color="#10b981" roughness={0.4} metalness={0.1} />
     </mesh>
