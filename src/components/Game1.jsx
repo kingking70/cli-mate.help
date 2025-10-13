@@ -4,13 +4,42 @@ import { Atom } from 'lucide-react';
 
 
 const Game1 = () => {
+    
+    // icon
     const [isMinimized, setIsMinimized] = useState(true);
+    const [position, setPosition] = useState({ x: 50, y: 50 });
+    const [isDragging, setIsDragging] = useState(false);
+
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        dragRef.current = {
+            startX: e.clientX - position.x,
+            startY: e.clientY - position.y
+        };
+    };
+    
+    const handleMouseMove = (e) => {
+        if (isDragging) {
+            setPosition({
+                x: e.clientX - dragRef.current.startX,
+                y: e.clientY - dragRef.current.startY
+            });
+        }
+    };
+    
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    // game
     const [stage, setStage] = useState('welcome');
     const [playerName, setPlayerName] = useState('');
     const [nameInput, setNameInput] = useState('');
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [isChecking, setIsChecking] = useState(false);
     const [showWelcomeText, setShowWelcomeText] = useState(false);
+
+
 
     const resetGame = () => {
         setStage('welcome');
@@ -192,8 +221,8 @@ const Game1 = () => {
     return (
         <>
             {isMinimized ? (
-                <div className="floating-icon" onClick={handleMaximize}>
-                    <Atom/>
+                <div className="floating-icon" onClick={handleMaximize}  onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
+                    <Atom />
                 </div>
             ) : (
                 <div className="game1-container">
