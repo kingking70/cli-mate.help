@@ -4,6 +4,7 @@ import BottomSlider from './BottomSlider/BottomSlider';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
 import { useRef } from 'react';
+import { Game1 } from './components/Game1';
 
 function RotatingSphere() {
   const sphereRef = useRef()
@@ -36,6 +37,12 @@ export default function App() {
        
       </Canvas>
       <Leva />
+      <div className="flex-1 lg:w-96 lg:flex-none overflow-auto">
+          <Game1 
+            width="100%" 
+            height="100%" 
+          />
+      </div>
       {/* Your page content goes here. The slider is fixed to bottom via CSS. */}
       <BottomSlider />
     </div>
