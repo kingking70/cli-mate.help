@@ -17,7 +17,7 @@
 }
 
 .image {
-  width: 70%;
+  width: 90%;
   height: 100%;
   background-size: cover;
   background-position: center center;
@@ -29,5 +29,5 @@
   right: 0;
   bottom: 0;
   height: var(--bottom-slider-height);
-  z-index: 20;
+  z-index: 50;
 }

@@ -8,7 +8,7 @@ export default function BottomSlider() {
     return (
     <>
     <div className={styles.bottomBar}>
-        <Slider items={items} width={700} visible={3} style={{ height: '100%' }}>
+        <Slider items={items} width={300} visible={4} style={{ height: '100%' }}>
           {({ css, url }, i) => (
             <div className={styles.content}>
               <div className={styles.marker}>{String(i).padStart(2, '0')}</div>
