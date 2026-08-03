@@ -1,0 +1,35 @@
+.caption {
+  position: fixed;
+  left: 0;
+  right: 0;
+  /* Sits near the bottom edge, clear of a phone's home bar. */
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 35px);
+  z-index: 21;
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 34em;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  /* Shrinks on narrow screens so it wraps to two lines at most. */
+  font-size: clamp(11px, 3.1vw, 13.5px);
+  line-height: 1.5;
+  letter-spacing: 0.1px;
+  color: #6e6e73;
+  text-wrap: balance;
+  /* The line sits over the canvas: only the link may take the pointer, so
+     dragging across it still orbits the scene. */
+  pointer-events: none;
+}
+
+.link {
+  pointer-events: auto;
+  color: #6e6e73;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(110, 110, 115, 0.45);
+}
+
+.link:hover {
+  color: #1d1d1f;
+  text-decoration-color: currentColor;
+}

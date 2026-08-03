@@ -2,14 +2,29 @@
   --bottom-slider-height: clamp(140px, 24vh, 320px);
 }
 
+html,
+body {
+  height: 100%;
+  /* The scene is a fixed, full-screen canvas: nothing here is meant to scroll,
+     so kill the phantom page scroll and the pull-to-refresh / rubber-band that
+     comes with it on phones. Notes scroll inside themselves in focus mode. */
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 #root {
-  width: 100vw;
+  width: 100%;
+  /* dvh follows mobile browser chrome as it hides and shows; vh is the fallback
+     for browsers without it. */
   height: 100vh;
+  height: 100dvh;
 }
 
 body {
   margin: 0;
   padding-bottom: var(--bottom-slider-height);
+  /* Stop iOS inflating text when a phone is turned to landscape. */
+  -webkit-text-size-adjust: 100%;
 }
 
 

@@ -29,5 +29,5 @@
   right: 0;
   bottom: 0;
   height: var(--bottom-slider-height);
-  z-index: 50;
+  z-index: 20;
 }

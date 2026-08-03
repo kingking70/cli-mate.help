@@ -1,0 +1,278 @@
+/* The note face. On a card in the stack width/height come from the card size;
+   in focus mode .focused sizes it instead. Fully opaque either way — nothing
+   behind a note may show through it, and the stack is only readable head-on. */
+.window {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Matches the card's corner radius at the face's pixel scale. */
+  border-radius: 16px;
+  background: #ffffff;
+  /* No blending with whatever is painted underneath, and no ghost of the note
+     on the far side of the card. */
+  opacity: 1;
+  isolation: isolate;
+  backface-visibility: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  color: #1d1d1f;
+  user-select: none;
+  cursor: pointer;
+}
+
+/* Focus mode: dim everything, centre one note, close on a click outside it. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  /* Above the canvas (19), the slider (20) and the note faces (~100). */
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Keeps clear of notches and home bars on a phone. */
+  padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right))
+    max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  background: rgba(18, 18, 20, 0.45);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  cursor: default;
+  /* A flick that runs past the end of the note stops here. */
+  overscroll-behavior: contain;
+  animation: fade 160ms ease-out;
+}
+
+.focused {
+  width: min(680px, 100%);
+  /* dvh so the note doesn't jump as mobile browser chrome hides and shows. */
+  height: min(78vh, 760px);
+  height: min(78dvh, 760px);
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  cursor: default;
+  user-select: text;
+  animation: rise 200ms cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+
+/* A little more room to breathe than on the card. */
+.focused .body {
+  padding: 20px 26px 26px;
+  font-size: 15px;
+  line-height: 24px;
+  /* Always shown here — the note is the thing being read. */
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Phones: use nearly the whole screen and tighten the padding, so the body text
+   keeps a readable measure instead of wrapping every few words. */
+@media (max-width: 600px) {
+  .backdrop {
+    padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right))
+      max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+    /* Blurring a live canvas is expensive on a phone GPU. */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .focused {
+    height: min(86vh, 760px);
+    height: min(86dvh, 760px);
+    border-radius: 16px;
+  }
+
+  .focused .body {
+    padding: 16px 18px 22px;
+  }
+
+  .focused .titleBar {
+    height: 38px;
+  }
+}
+
+.focused .body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+}
+
+.titleBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  height: 42px;
+  padding: 0 14px;
+}
+
+.light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.red {
+  background: #ff5f57;
+}
+
+.yellow {
+  background: #febc2e;
+}
+
+.green {
+  background: #28c840;
+}
+
+.title {
+  margin-left: 14px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.stamp {
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 11.5px;
+  color: #86868b;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  padding: 16px 14px 18px;
+  font-size: 14px;
+  line-height: 22px;
+  overflow-y: auto;
+  /* Don't chain the scroll out to the page at the end of a note. */
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  /* The gutter is always reserved so the text never reflows; the thumb only
+     shows on the note under the pointer. */
+  scrollbar-color: transparent transparent;
+}
+
+.window:hover .body {
+  scrollbar-color: rgba(0, 0, 0, 0.22) transparent;
+}
+
+.body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.body::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.window:hover .body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.22);
+}
+
+/* Blank lines in the body still take a full line of height. */
+.line {
+  min-height: 22px;
+  white-space: pre-wrap;
+}
+
+/* Title / Heading / Subheading, matching Notes' three text styles. */
+.h1,
+.h2,
+.h3 {
+  margin: 10px 0 2px;
+}
+
+.h1:first-child,
+.h2:first-child,
+.h3:first-child {
+  margin-top: 0;
+}
+
+.h1 {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.h2 {
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+.h3 {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 600;
+}
+
+/* A bullet, numbered or checklist row. */
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 22px;
+}
+
+.marker {
+  flex: 0 0 14px;
+  text-align: right;
+  color: #1d1d1f;
+}
+
+.itemText {
+  white-space: pre-wrap;
+}
+
+.checkbox {
+  flex: 0 0 14px;
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  margin-top: 4px;
+  border: 1.5px solid #c7c7cc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checked {
+  background: #f5b301;
+  border-color: #f5b301;
+}
+
+.tick {
+  display: block;
+  width: 9px;
+  height: 9px;
+}
+
+.link {
+  color: #0a84ff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+/* Shown in place of the body when a note has no content. */
+.caret {
+  width: 2px;
+  height: 22px;
+  border-radius: 1px;
+  background: #f5b301;
+}
