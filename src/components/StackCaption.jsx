@@ -5,7 +5,7 @@ import styles from './StackCaption.module.css'
 export default function StackCaption() {
   return (
     <p className={styles.caption}>
-      double-click to open note and click elsewhere to close it. built by{' '}
+      double-click/tap to open note and click elsewhere to close it. built by{' '}
       <a
         className={styles.link}
         href="https://kingstonkoh.com"

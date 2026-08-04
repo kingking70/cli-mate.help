@@ -21,15 +21,11 @@
   pointer-events: none;
 }
 
+/* Same colour as the line it sits in; only the underline marks it. */
 .link {
   pointer-events: auto;
-  color: #6e6e73;
+  color: inherit;
   text-decoration: underline;
   text-underline-offset: 2px;
-  text-decoration-color: rgba(110, 110, 115, 0.45);
-}
-
-.link:hover {
-  color: #1d1d1f;
   text-decoration-color: currentColor;
 }

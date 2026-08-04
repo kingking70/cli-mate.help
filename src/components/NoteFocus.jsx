@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { NoteFace } from './AppleNote'
+import NoteFace from './NoteFace'
 import { notes } from './notes'
 import styles from './AppleNote.module.css'
 

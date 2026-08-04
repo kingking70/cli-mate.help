@@ -1,6 +1,6 @@
-/* The note face. On a card in the stack width/height come from the card size;
-   in focus mode .focused sizes it instead. Fully opaque either way — nothing
-   behind a note may show through it, and the stack is only readable head-on. */
+/* The note as DOM, used by focus mode only — the notes in the stack are painted
+   into the card's own texture (see noteTexture.js), which is what keeps a face
+   and its card together on every browser. .focused does the sizing. */
 .window {
   box-sizing: border-box;
   display: flex;
@@ -9,11 +9,6 @@
   /* Matches the card's corner radius at the face's pixel scale. */
   border-radius: 16px;
   background: #ffffff;
-  /* No blending with whatever is painted underneath, and no ghost of the note
-     on the far side of the card. */
-  opacity: 1;
-  isolation: isolate;
-  backface-visibility: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
   color: #1d1d1f;
   user-select: none;
@@ -63,20 +58,21 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* Phones: use nearly the whole screen and tighten the padding, so the body text
-   keeps a readable measure instead of wrapping every few words. */
+/* Phones: the backdrop around the note is the only way out of focus mode with
+   no Escape key, so it keeps the full 24px band down the sides and a deep strip
+   along the bottom — thumb-sized, and clear of the browser's own toolbar. */
 @media (max-width: 600px) {
   .backdrop {
-    padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right))
-      max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+    padding-bottom: max(88px, calc(env(safe-area-inset-bottom) + 68px));
     /* Blurring a live canvas is expensive on a phone GPU. */
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }
 
   .focused {
-    height: min(86vh, 760px);
-    height: min(86dvh, 760px);
+    /* Sized off the padded area, so it can't grow back into the tap-out band. */
+    height: 100%;
+    max-height: 760px;
     border-radius: 16px;
   }
 
@@ -262,8 +258,9 @@
   height: 9px;
 }
 
+/* Links read as the surrounding text; only the underline marks them. */
 .link {
-  color: #0a84ff;
+  color: inherit;
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;

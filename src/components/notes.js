@@ -27,7 +27,7 @@ export const notes = [
   },
   {
     id: 'note-2',
-    title: 'FUTO guides',
+    title: 'futo guides',
     date: '3 August 2026 at 12:23',
     body: 'to a self managed life.\n\nbelow are video and written guides to build your own private tech. \n- [video part 1/2](https://youtu.be/Et5PPMYuOc8?si=e-T_ZZ7c-oYmYiOX) \n- [video part 2/2](https://youtu.be/3fW9TV1WQi8?si=9Et1nuaNMPs1V1Xf) \n- [guide](https://wiki.futo.org/index.php/Introduction_to_a_Self_Managed_Life:_a_13_hour_%26_28_minute_presentation_by_FUTO_software)',
   },
