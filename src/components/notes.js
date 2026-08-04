@@ -47,6 +47,6 @@ export const notes = [
     id: 'note-5',
     title: 'curious software',
     date: formatStamp(new Date()),
-    body: 'found [ink & switch](https://inkandswitch.com) a few months back and thought its values were interesting. \n1. local-first \n2. malleable \n3.programmable ink \n4. universal version control. \n\n i understood local-first and version control to a certain technical degree but malleable and programming ink were foreign values to me. i wish to venture more into these concepts.',
+    body: 'found [ink & switch](https://inkandswitch.com) a few months back and thought its values were interesting. \n1. local-first \n2. malleable \n3. programmable ink \n4. universal version control. \n\n i understood local-first and version control to a certain technical degree but malleable and programming ink were foreign values to me. i wish to venture more into these concepts.',
   },
 ]
