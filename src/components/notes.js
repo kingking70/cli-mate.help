@@ -23,7 +23,7 @@ export const notes = [
     id: 'note-1',
     title: 'this site',
     date: formatStamp(new Date()),
-    body: 'is a work in progress. i\'m still figuring out its trajectory. for now, i\'ve settled with educating myself through writing about: \n- private tech \n- malleable software \n- energy \n- climate \n- bio(medical)engineered/firmware? products. \n\n project(s) that i\'ve worked on: \n[x] newclear.website \n\ncontents here in order: \n1. FUTO guides \n2. newclear.website \n3. cool stuff',
+    body: 'is a work in progress. i\'m still figuring out its trajectory. for now, i\'ve settled with educating myself through writing about: \n- private tech \n- malleable software \n- energy \n- climate \n- bio(medical)engineered/firmware? products. \n\n project(s) that i\'ve worked on: \n[x] newclear.website \n\ncontents here in order: \n1. FUTO guides \n2. newclear.website \n3. cool stuff \n4. curious',
   },
   {
     id: 'note-2',
@@ -45,8 +45,8 @@ export const notes = [
   },
   {
     id: 'note-5',
-    title: 'curious software',
+    title: 'curious',
     date: formatStamp(new Date()),
-    body: 'found [ink & switch](https://inkandswitch.com) a few months back and thought its values were interesting. \n1. local-first \n2. malleable \n3. programmable ink \n4. universal version control. \n\n i understood local-first and version control to a certain technical degree but malleable and programming ink were foreign values to me. i wish to venture more into these concepts.',
+    body: '# software \nfound [ink & switch](https://inkandswitch.com) a few months back and thought its values were interesting. \n1. local-first \n2. malleable \n3. programmable ink \n4. universal version control. \n\n i understood local-first and version control to a certain technical degree but malleable and programming ink were foreign values to me. i wish to venture more into these concepts. \n\n# studies \nengineering genetic circuits \n1. design',
   },
 ]
